@@ -17,6 +17,10 @@ _Built and maintained by **Viprasol Tech**._
 
 </div>
 
+<p align="center">
+  <img src="docs/assets/demo.svg" width="820" alt="bar-by-bar demo">
+</p>
+
 ---
 
 `bar-by-bar` is a tiny, dependency-light backtesting harness that lets **any agent or strategy** make trading decisions **one bar at a time** on strictly **point-in-time data**. Its defining feature is a **hard look-ahead guard**: the agent is handed a *frozen, read-only* window of the market that exposes only the bars up to and including the current one. Any attempt to peek at a future bar raises `LookaheadError` — look-ahead bias becomes a crash, not a silently inflated Sharpe ratio.
@@ -29,7 +33,10 @@ Everything runs **fully offline**: no network, no API keys. Anything that would 
 
 ## Demo
 
-Run a built-in example agent over deterministic synthetic bars and get a metrics board straight in the terminal. This is **real, pasted output**:
+Run a built-in example agent over deterministic synthetic bars and get a metrics board straight in the terminal (the hero image above is this exact command, rendered with [`docs/make_demo.py`](docs/make_demo.py)).
+
+<details>
+<summary>Plain-text version</summary>
 
 ```text
 $ python -m bar_by_bar run --agent momentum
@@ -51,6 +58,8 @@ bar-by-bar :: momentum agent
 | Bars          |       250 |
 +---------------------------+
 ```
+
+</details>
 
 Prefer machine-readable output? `--json`:
 
