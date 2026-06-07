@@ -31,9 +31,7 @@ def main() -> None:
     result = harness.run(series, momentum_agent())
 
     console.print("[bold green]$[/bold green] python -m bar_by_bar run --agent momentum\n")
-    console.print(
-        f"[bold]Agent:[/bold] momentum   [bold]Bars:[/bold] {len(series)}"
-    )
+    console.print(f"[bold]Agent:[/bold] momentum   [bold]Bars:[/bold] {len(series)}")
     console.print(metrics_table(result, title="bar-by-bar :: momentum agent"))
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
