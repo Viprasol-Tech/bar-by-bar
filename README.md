@@ -119,7 +119,11 @@ Write your own agent in a few lines — it is just a function:
 
 ```python
 from bar_by_bar import (
-    Bar, PointInTimeSeries, MarketView, Decision, Harness,
+    Bar,
+    PointInTimeSeries,
+    MarketView,
+    Decision,
+    Harness,
 )
 
 # 1. your data as point-in-time bars
@@ -129,16 +133,18 @@ bars = [
 ]
 series = PointInTimeSeries(bars)
 
+
 # 2. your agent: a callable (MarketView) -> Decision.
 #    The view ONLY exposes bars up to `view.t`. view[view.t + 1] would raise
 #    LookaheadError, so look-ahead bias is structurally impossible.
 def my_agent(view: MarketView) -> Decision:
     if not view.has(3):
         return Decision.hold()
-    closes = view.closes(3)            # last 3 visible closes, never the future
+    closes = view.closes(3)  # last 3 visible closes, never the future
     if closes[-1] > closes[0]:
         return Decision.buy(size=1.0, reason="uptrend")
     return Decision.sell(size=1.0, reason="downtrend")
+
 
 # 3. run the harness and read the metrics
 result = Harness(starting_cash=10_000).run(series, my_agent)
@@ -150,7 +156,7 @@ Wrapping an agent framework is the same shape — call your crew inside the func
 ```python
 def crew_agent(view: MarketView) -> Decision:
     prompt = f"Last closes: {view.closes(20)}. Buy, sell, or hold?"
-    answer = my_crew.kickoff(prompt)      # CrewAI / LangGraph / AutoGen / LLM
+    answer = my_crew.kickoff(prompt)  # CrewAI / LangGraph / AutoGen / LLM
     return {"buy": Decision.buy(), "sell": Decision.sell()}.get(answer, Decision.hold())
 ```
 
